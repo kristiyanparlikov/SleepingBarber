@@ -1,24 +1,24 @@
 package barberShop2;
 
-public class Customer implements Runnable {
-	 private int id = 0;
-	 private BarberSalon salon = null;
+public class Customer extends Thread {
+	 private BarberSalon salon;
 	 
-	 public Customer(int id, BarberSalon salon) {
-	     this.id = id;
+	 public Customer(BarberSalon salon) {
 	     this.salon = salon;
 	 }
 
 	@Override
 	public void run() {
-		while (true) {
-	    	 System.out.println("Customer with id = " + id + " needs a haircut!");
 	         try {
-				salon.waitingForHairCut(id);
+	        	Thread.sleep(Math.round((Math.random() * 1000)));
+	        	salon.enterSalon();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+	         super.run();
+	}
+	
+	public void sitInBarberChair() throws InterruptedException {
+	 salon.getHaircut(this);	
 	}
 }

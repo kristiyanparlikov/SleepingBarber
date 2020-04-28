@@ -1,23 +1,20 @@
 package barberShop2;
 
-public class Barber implements Runnable{
+public class Barber extends Thread{
 	
-	private BarberSalon salon = null;
+	private BarberSalon salon;
 
 	public Barber(BarberSalon salon) {
 		this.salon = salon;
-		new Thread(this).start();
 	}
 	
 	@Override
 	public void run() {
-		while(true) {
 			try {
-				salon.wantToCut();
+				salon.work();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+			super.run();
 	}
 }
